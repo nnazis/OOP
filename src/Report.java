@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class Report {
+public class Report implements Serializable {
 
     private String reportId;
     private ReportType reportType;
@@ -16,6 +17,10 @@ public class Report {
         this.title = title;
         this.content = content;
         this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public Report(String title, String content) {
+        this(ReportType.RESEARCH_STATISTICS, title, content);
     }
 
     public Report(String reportId, ReportType reportType,String title, String content, String createdAt) {
