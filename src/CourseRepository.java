@@ -1,4 +1,3 @@
-
 public class CourseRepository extends DataRepository<Course> {
     public Course findByCode(String code) {
         for (Course course : items) {

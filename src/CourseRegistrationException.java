@@ -1,4 +1,3 @@
-
 public class CourseRegistrationException extends Exception{
 	public CourseRegistrationException() {
 		super("Course registration failed");

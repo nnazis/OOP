@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +10,7 @@ public class Employee extends User {
 	
 	public Employee(String id, String username, String password, String firstName, String lastName, 
 			String email, double salary, String hireDate, UserRole role) {
-		super(id, firstName + " " + lastName, email);
+		super(id, username, password, firstName, lastName, email, role);
 		this.salary = salary;
 		this.hireDate = hireDate;
 	}
