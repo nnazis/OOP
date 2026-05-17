@@ -1,4 +1,3 @@
-package project;
 
 public class CourseRegistrationException extends Exception{
 	public CourseRegistrationException() {

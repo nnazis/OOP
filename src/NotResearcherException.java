@@ -1,4 +1,3 @@
-package project;
 
 public class NotResearcherException extends Exception{
 	public NotResearcherException() {

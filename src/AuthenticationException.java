@@ -1,4 +1,3 @@
-package project;
 
 public class AuthenticationException extends Exception{
 	public AuthenticationException() {
