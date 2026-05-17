@@ -1,8 +1,9 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataRepository<T> {
+public class DataRepository<T> implements Serializable {
     protected List<T> items;
 
     public DataRepository() {
