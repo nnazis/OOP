@@ -10,7 +10,7 @@ public class Employee extends User {
 	protected List<Message> messages = new ArrayList<>();
 	protected List<Request> requests = new ArrayList<>();
 	
-	public Employee(String id, String username, String password, String firstName, Stirng lastName, 
+	public Employee(String id, String username, String password, String firstName, String lastName, 
 			String email, double salary, String hireDate, UserRole role) {
 		super(id, username, password, firstName, lastName, email, role);
 		this.salary = salary;

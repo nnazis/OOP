@@ -3,6 +3,7 @@ package project;
 import java.util.Objects;
 
 public class ResearchPaper {
+	
 	private String doi;
 	private String title;
 	private int pages;
@@ -23,27 +24,35 @@ public class ResearchPaper {
 		this.abstractText = abstractText;
 		this.keywords = keywords;
 	}
+	
 	public String getDoi() {
 		return doi;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
+	
 	public String getJournal() {
 		return journal;
 	}
+	
 	public int getPages() {
 		return pages;
 	}
+	
 	public String getPublicationDate() {
 		return publicationDate;
 	}
+	
 	public int getCitations() {
 		return citations; 
 	}
+	
 	public String getAbstractText() {
 		return abstractText;
 	}
+	
 	public String getKeywords() {
 		return keywords;
 	}
@@ -59,6 +68,7 @@ public class ResearchPaper {
 	}
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj) return true;
 		if (obj == null || getClass() != obj.getClass()) return false;
 		ResearchPaper that = (ResearchPaper) obj;

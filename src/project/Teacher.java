@@ -44,7 +44,7 @@ public class Teacher extends Employee implements Researcher{
 		return researchPapers;
 	}
 	@Override
-	public List<ResearchProject> getResearchPtojects() {
+	public List<ResearchProject> getResearchProjects() {
 		return researchProjects;
 	}
 	@Override
