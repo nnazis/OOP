@@ -1,4 +1,5 @@
-
 public enum DegreeType {
-	BACHELOR
+    BACHELOR,
+    MASTER,
+    PHD
 }

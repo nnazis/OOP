@@ -1,145 +1,146 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Course implements Serializable {
-    private String code;
+public class Course {
+    private String courseId;
     private String name;
+    private String description;
     private int credits;
-    private Teacher teacher;
+    private String major;
+    private int yearOfStudy;
+    private SemesterType semester;
+    private CourseStatus status;
+    private List<Teacher> instructions;
     private List<Student> students;
-    private List<Teacher> teachers;
     private List<Lesson> lessons;
-    private List<Assessment> assessments;
-    private GradingPolicy gradingPolicy;
     private Map<Student, Mark> marks;
 
-    public Course(String code, String name, int credits) {
-        this(code, name, credits, null, new GradingPolicy(30, 30));
-    }
-
-    public Course(String code, String name, int credits, Teacher teacher) {
-        this(code, name, credits, teacher, new GradingPolicy(30, 30));
-    }
-
-    public Course(String code, String name, int credits, Teacher teacher, GradingPolicy gradingPolicy) {
-        this.code = code;
+    public Course(String courseId, String name, String description, int credits, String major, int yearOfStudy, SemesterType semester) {
+        this.courseId = courseId;
         this.name = name;
+        this.description = description;
         this.credits = credits;
-        this.teacher = teacher;
-        this.gradingPolicy = gradingPolicy;
+        this.major = major;
+        this.yearOfStudy = yearOfStudy;
+        this.semester = semester;
+        this.status = CourseStatus.OPEN;
+        this.instructions = new ArrayList<>();
         this.students = new ArrayList<>();
-        this.teachers = new ArrayList<>();
-        if (teacher != null) {
-            this.teachers.add(teacher);
-        }
         this.lessons = new ArrayList<>();
-        this.assessments = new ArrayList<>();
         this.marks = new HashMap<>();
     }
 
-    public void addStudent(Student student) {
-        if (!students.contains(student)) {
-            students.add(student);
-            marks.put(student, new Mark());
-            student.registerCourse(this);
+    public String getCourseId(){
+        return courseId;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getDescription(){
+        return description;
+    }
+    public int getCredits(){
+        return credits; 
+    }
+    public String getMajor(){ 
+        return major;
+    }
+    public int getYearOfStudy(){
+        return yearOfStudy;
+    }
+    public SemesterType getSemester(){ 
+        return semester; 
+    }
+    public CourseStatus getStatus(){
+        return status;
+    }
+    public List<Teacher> getInstructions(){
+        return instructions;
+    }
+    public List<Student> getStudents(){
+        return students;
+    }
+    public List<Lesson> getLessons(){
+        return lessons;
+    }
+
+    public void setStatus(CourseStatus status) {
+        this.status = status;
+     }
+
+    public void addInstructor(Teacher teacher) {
+        if (!instructions.contains(teacher)) {
+            instructions.add(teacher);
         }
     }
 
-    public void removeStudent(Student student) {
-        students.remove(student);
-        marks.remove(student);
-        student.dropCourse(this);
-    }
-
-    public void addTeacher(Teacher teacher) {
-        if (!teachers.contains(teacher)) {
-            teachers.add(teacher);
-        }
+    public void removeInstructor(Teacher teacher) {
+        instructions.remove(teacher);
     }
 
     public void addLesson(Lesson lesson) {
         lessons.add(lesson);
     }
 
-    public void addAssessment(Assessment assessment) {
-        assessments.add(assessment);
+
+    public String getCode() {
+        return courseId;
     }
 
-    public void putMark(Student student, Assessment assessment, double score) {
+    public List<Teacher> getTeachers() {
+        return instructions; 
+    }
+
+    public Teacher getTeacher() {
+         return instructions.isEmpty() ? null : instructions.get(0); 
+        }
+
+    public void addTeacher(Teacher teacher) { 
+        addInstructor(teacher); 
+    }
+
+    public void removeTeacher(Teacher teacher) { 
+        removeInstructor(teacher);
+     }
+
+    public void addStudent(Student student) {
         if (!students.contains(student)) {
-            throw new IllegalArgumentException("Student is not enrolled in this course!");
+            students.add(student);
+            if (!student.getRegisteredCourses().contains(this)){
+                student.registerCourse(this);
+            }
         }
-        if (!assessments.contains(assessment)) {
-            throw new IllegalArgumentException("Assessment does not belong to this course!");
-        }
-        if (score < 0 || score > assessment.getMaxScore()) {
-            throw new IllegalArgumentException("Invalid score!");
-        }
-        throw new UnsupportedOperationException("Use setMark(student, att1, att2, finalExam) for course total marks!");
+    }
+
+    public void removeStudent(Student student) { 
+        students.remove(student); 
     }
 
     public void setMark(Student student, Mark mark) {
-        if (!students.contains(student)) {
-            throw new IllegalArgumentException("Student is not enrolled in this course!");
-        }
         marks.put(student, mark);
-        student.getTranscript().addCourseMark(this, mark);
-        student.calculateGPA();
-    }
-
-    public void setMark(Student student, double attestation1, double attestation2, double finalExam) {
-        setMark(student, new Mark(attestation1, attestation2, finalExam));
     }
 
     public Mark getMark(Student student) {
         return marks.get(student);
     }
 
-    public String getCode() {
-        return code;
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+        if (!(obj instanceof Course)){
+            return false;
+        }
+        return courseId.equals(((Course) obj).courseId);
     }
 
-    public String getName() {
-        return name;
+    public int hashCode() {
+        return courseId.hashCode();
     }
 
-    public int getCredits() {
-        return credits;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public List<Assessment> getAssessments() {
-        return assessments;
-    }
-
-    public GradingPolicy getGradingPolicy() {
-        return gradingPolicy;
-    }
-
-    public Map<Student, Mark> getMarks() {
-        return marks;
-    }
-
-    @Override
     public String toString() {
-        return code + " - " + name + " (" + credits + " credits)";
+        return "Course[id=" + courseId + ", name=" + name + ", credits=" + credits + "]";
     }
 }

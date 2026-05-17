@@ -1,6 +1,6 @@
 public enum NewsCategory {
     ACADEMIC,
-    RESEARCH,
-    EVENT,
+    SPORTS,
+    CULTURE,
     ANNOUNCEMENT
 }

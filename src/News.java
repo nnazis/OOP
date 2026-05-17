@@ -1,27 +1,12 @@
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
-
-public class News implements Serializable {
-
+public class News {
     private String newsId;
     private String title;
     private String content;
     private NewsCategory category;
     private String publishedAt;
-    private String author;
+    private Manager author;
 
-    public News(String title, String content, NewsCategory category, String author) {
-        this.newsId = UUID.randomUUID().toString();
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.author = author;
-        this.publishedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-    }
-
-    public News(String newsId, String title, String content, NewsCategory category, String publishedAt, String author) {
+    public News(String newsId, String title, String content, NewsCategory category, String publishedAt, Manager author) {
         this.newsId = newsId;
         this.title = title;
         this.content = content;
@@ -30,27 +15,26 @@ public class News implements Serializable {
         this.author = author;
     }
 
-    public String getNewsId(){ 
+    public String getNewsId(){
         return newsId;
     }
-    public String getTitle(){ 
+    public String getTitle(){
         return title;
     }
-    public String getContent(){ 
+    public String getContent(){
         return content;
     }
-    public NewsCategory getCategory(){ 
+    public NewsCategory getCategory(){
         return category;
     }
     public String getPublishedAt(){
         return publishedAt;
     }
-    public String getAuthor(){ 
-        return author; 
+    public Manager getAuthor(){
+        return author;
     }
 
-    @Override
     public String toString() {
-        return "\n"+ "[" + category + "] " + title + "\n" + "By: " + author + "  |  " + publishedAt + "\n"+ "──────────────────────────────────────────\n" + content + "\n";
+        return "News[title=" + title + ", category=" + category + "]";
     }
 }

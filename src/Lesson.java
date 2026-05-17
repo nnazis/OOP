@@ -1,55 +1,54 @@
-
-import java.io.Serializable;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-
-public class Lesson implements Serializable {
-    private LessonType type;
-    private DayOfWeek day;
-    private LocalTime time;
+public class Lesson {
+    private String lessonId;
+    private LessonType lessonType;
+    private String day;
+    private String startTime;
+    private String endTime;
     private String room;
-    private Teacher teacher;
     private Course course;
+    private Teacher teacher;
 
-    public Lesson(LessonType type, String day, String time, String room, Teacher teacher, Course course) {
-        this(type, DayOfWeek.valueOf(day.toUpperCase()), LocalTime.parse(time), room, teacher, course);
-    }
-
-    public Lesson(LessonType type, DayOfWeek day, LocalTime time, String room, Teacher teacher, Course course) {
-        this.type = type;
+    public Lesson(String lessonId, LessonType lessonType, String day, String startTime, String endTime, String room, Course course, Teacher teacher) {
+        this.lessonId = lessonId;
+        this.lessonType = lessonType;
         this.day = day;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.room = room;
-        this.teacher = teacher;
         this.course = course;
+        this.teacher = teacher;
     }
 
-    public LessonType getType() {
-        return type;
+    public String getLessonId(){ 
+        return lessonId; 
     }
-
-    public DayOfWeek getDay() {
+    public LessonType getLessonType(){
+        return lessonType;
+    }
+    public String getDay(){
         return day;
     }
-
-    public LocalTime getTime() {
-        return time;
+    public String getStartTime(){
+        return startTime;
     }
-
-    public String getRoom() {
+    public String getEndTime(){
+        return endTime;
+    }
+    public String getRoom(){
         return room;
     }
-
-    public Teacher getTeacher() {
+    public Course getCourse(){
+        return course;
+    }
+    public Teacher getTeacher(){
         return teacher;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getScheduleInfo() {
+        return day + " " + startTime + "-" + endTime + " Room:" + room;
     }
 
-    @Override
     public String toString() {
-        return type + " " + day + " " + time + " room " + room;
+        return "Lesson[" + lessonType + ", " + day + " " + startTime + "-" + endTime + "]";
     }
 }

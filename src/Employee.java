@@ -1,43 +1,48 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Employee extends User {
-	protected double salary;
-	protected String hireDate;
-	protected List<Message> messages = new ArrayList<>();
-	protected List<Request> requests = new ArrayList<>();
-	
-	public Employee(String id, String username, String password, String firstName, String lastName, 
-			String email, double salary, String hireDate, UserRole role) {
-		super(id, username, password, firstName, lastName, email, role);
-		this.salary = salary;
-		this.hireDate = hireDate;
-	}
-	public double getSalary() {
-		return salary;
-	}
-	public String getHireDate() {
-		return hireDate;
-	}
-	public List<Message> getMessages() {
-		return messages;
-	}
-	public List<Request> getRequests() {
-		return requests;
-	}
-	public void sendMessages(Employee receiver, String text) {
-		Message msg = new Message(UUID.randomUUID().toString(), this, receiver, text);
-		messages.add(msg);
-		receiver.messages.add(msg);
-	}
-	public void submitRequest(Request request) {
-		requests.add(request);
-	}
-	@Override
-	public void viewMenu() {
-		super.viewMenu();
-		System.out.println("1. View Message");
-		System.out.println("2. Send Message");
-	}
+    private double salary;
+    private String hireDate;
+    private List<Message> messages;
+    private List<Request> requests;
+
+    public Employee(String id, String username, String password, String firstName, String lastName, String email, UserRole role, double salary, String hireDate) {
+        super(id, username, password, firstName, lastName, email, role);
+        this.salary = salary;
+        this.hireDate = hireDate;
+        this.messages = new ArrayList<>();
+        this.requests = new ArrayList<>();
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+    public String getHireDate(){
+        return hireDate; 
+    }
+    public List<Message> getMessages(){
+        return messages;
+    }
+    public List<Request> getRequests(){
+        return requests; 
+    }
+
+    public void sendMessage(Employee receiver, String text) {
+        Message msg = new Message("msg-" + System.currentTimeMillis(), this, receiver, text, "2026-01-01");
+        messages.add(msg);
+        receiver.getMessages().add(msg);
+    }
+
+    public void submitRequest(Request request) {
+        requests.add(request);
+    }
+
+    public void viewMenu() {
+        System.out.println("Employee menu");
+    }
+
+    public String toString() {
+        return "Employee[id=" + getId() + ", name=" + getFullName() + "]";
+    }
 }

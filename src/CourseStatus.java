@@ -1,4 +1,5 @@
-
 public enum CourseStatus {
-	OPEN, CLOSED, CANCELLED
+    OPEN,
+    CLOSED,
+    FULL
 }

@@ -1,4 +1,5 @@
-
 public enum ManagerType {
-	OR, DEPARTMENT, DEAN_OFFICE, RECTOR_OFFICE
+    DEAN,
+    VICE_RECTOR,
+    DEPARTMENT_HEAD
 }

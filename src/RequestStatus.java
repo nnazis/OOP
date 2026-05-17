@@ -1,4 +1,7 @@
-
 public enum RequestStatus {
-	NEW, SIGNED, APPROVED, REJECTED
+    NEW,
+    SIGNED,
+    PENDING,
+    APPROVED,
+    REJECTED
 }

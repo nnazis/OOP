@@ -1,5 +1,4 @@
-
 public enum SemesterType {
-	FALL, SPRING, SUMMER
-	
+    FALL,
+    SPRING
 }

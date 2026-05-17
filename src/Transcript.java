@@ -1,69 +1,78 @@
-
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Transcript implements Serializable {
+public class Transcript {
+    private Student student;
     private Map<Course, Mark> courseMarks;
+    private double gpa;
 
-    public Transcript() {
+    public Transcript(Student student) {
+        this.student = student;
         this.courseMarks = new HashMap<>();
+        this.gpa = 0.0;
     }
 
-    public void addCourseMark(Course course, Mark mark) {
+    public double getGpa(){
+        return gpa;
+    }
+    public Student getStudent(){
+        return student;
+    }
+
+    public void addMark(Course course, Mark mark){
         courseMarks.put(course, mark);
+        calculateGpa();
     }
 
-    public Map<Course, Mark> getCourseMarks() {
+    public Map<Course, Mark> getCourseMarks(){
         return courseMarks;
     }
 
-    public double calculateGPA() {
+    public Mark getMark(Course course){
+        return courseMarks.get(course);
+    }
+
+    public double calculateGpa() {
         if (courseMarks.isEmpty()) {
+            gpa = 0.0;
             return 0.0;
         }
         double totalPoints = 0.0;
         int totalCredits = 0;
-
         for (Map.Entry<Course, Mark> entry : courseMarks.entrySet()) {
             int credits = entry.getKey().getCredits();
-            totalPoints += convertToGPA(entry.getValue().getTotal()) * credits;
+            String grade = entry.getValue().getLetterGrade();
+            double point = 0.0;
+            if(grade.equals("A")){
+                point = 4.0;
+            }
+            else if(grade.equals("B")){
+                point = 3.0;
+            }
+            else if(grade.equals("C")){
+                point = 2.0;
+            }
+            else if(grade.equals("D")){
+                point = 1.0;
+            }
+            totalPoints += point * credits;
             totalCredits += credits;
         }
-
-        if (totalCredits == 0) {
-            return 0.0;
-        }
-        return totalPoints / totalCredits;
+        if (totalCredits > 0) gpa = totalPoints / totalCredits;
+        return gpa;
     }
 
-    private double convertToGPA(double total) {
-        if (total >= 94.5) return 4.0;
-        if (total >= 89.5) return 3.67;
-        if (total >= 84.5) return 3.33;
-        if (total >= 79.5) return 3.0;
-        if (total >= 74.5) return 2.67;
-        if (total >= 69.5) return 2.33;
-        if (total >= 64.5) return 2.0;
-        if (total >= 59.5) return 1.67;
-        if (total >= 54.5) return 1.33;
-        if (total >= 49.5) return 1.0;
-        return 0.0;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Transcript:\n");
-
+    public void printTranscript() {
+        System.out.println("=== Transcript: " + student.getFullName() + " ===");
         for (Map.Entry<Course, Mark> entry : courseMarks.entrySet()) {
-            sb.append(entry.getKey().getName())
-              .append(" - ")
-              .append(entry.getValue().getTotal())
-              .append(" ")
-              .append(entry.getValue().getLetterGrade())
-              .append("\n");
+            System.out.println(entry.getKey().getName() + " -> " + entry.getValue().getLetterGrade() + " (total: " + entry.getValue().getTotal() + ")");
         }
-        sb.append("GPA: ").append(calculateGPA());
-        return sb.toString();
+        System.out.println("GPA: " + gpa);
+    }
+
+    public String toString() {
+        return "Transcript[student=" + student.getFullName() + ", gpa=" + gpa + "]";
     }
 }
